@@ -1,0 +1,41 @@
+services:
+  proxy:
+    image: nginx:latest
+    container_name: proxy
+    ports:
+      - 80:80
+    working_dir: /etc/nginx/conf.d/
+    volumes:
+      - ./proxy/proxyconf:/etc/nginx/conf.d/
+      - ./proxy/nginxconf/nginx.conf:/etc/nginx/nginx.conf
+    tty: true
+
+  frontend:
+    image: node:alpine
+    container_name: frontend
+    command: "./setup.sh"
+    working_dir: /srv/app
+    volumes:
+      - ./frontend:/srv/app
+      - /srv/app/node_modules
+    tty: true
+  
+  backend:
+    image: node:alpine
+    container_name: backend
+    command: "./setup.sh"
+    working_dir: /srv/app
+    volumes:
+      - ./backend:/srv/app
+    tty: true
+  
+  database:
+    image: mongo:6-jammy
+    container_name: database
+    ports:
+      - 81:27017
+    volumes:
+      - dbdata6:/data/db
+    
+volumes:
+  dbdata6:
