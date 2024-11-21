@@ -32,8 +32,6 @@ services:
   database:
     image: mongo:6-jammy
     container_name: database
-    ports:
-      - 81:27017
     volumes:
       - dbdata6:/data/db
     

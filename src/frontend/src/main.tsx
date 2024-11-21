@@ -10,6 +10,8 @@ import Navbar from './elements/Navbar'
 import Homepage from './pages/Homepage'
 import About from './pages/About'
 import Database from './pages/Database'
+import Login from './pages/Login'
+import Register from './pages/Register'
 
 import './index.css'
 
@@ -29,6 +31,14 @@ const router = createBrowserRouter([
       {
         path: "/database",
         element: <Database />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
     ]
   }
