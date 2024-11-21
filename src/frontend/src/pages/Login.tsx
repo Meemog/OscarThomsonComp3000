@@ -34,10 +34,10 @@ export default function Login() {
                 <div className="flex">
                     <div className="content-center">
                         <div>
-                        <p className="text-center">Don't have an account?</p>
-                        <div className="flex justify-center">
-                            <Link to="/register" className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded">Register</Link>
-                        </div>
+                            <p className="text-center">Don't have an account?</p>
+                            <div className="flex justify-center">
+                                <Link to="/register" className="bg-blue-500 hover:bg-blue-700 text-white px-2 py-1 rounded">Register</Link>
+                            </div>
                         </div>
                     </div>
                 </div>
