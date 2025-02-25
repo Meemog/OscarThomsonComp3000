@@ -10,13 +10,39 @@ services:
       - ./proxy/nginxconf/nginx.conf:/etc/nginx/nginx.conf
     tty: true
 
-  frontend:
+  employee-fe:
     image: node:alpine
-    container_name: frontend
+    container_name: employee-fe
+    ports:
+      - 81:8000
     command: "./setup.sh"
     working_dir: /srv/app
     volumes:
-      - ./frontend:/srv/app
+      - ./employee-fe:/srv/app
+      - /srv/app/node_modules
+    tty: true
+
+  employer-fe:
+    image: node:alpine
+    container_name: employer-fe
+    ports:
+      - 82:8001
+    command: "./setup.sh"
+    working_dir: /srv/app
+    volumes:
+      - ./employer-fe:/srv/app
+      - /srv/app/node_modules
+    tty: true
+
+  clock-fe:
+    image: node:alpine
+    container_name: clock-fe
+    ports:
+      - 83:8002
+    command: "./setup.sh"
+    working_dir: /srv/app
+    volumes:
+      - ./clock-fe:/srv/app
       - /srv/app/node_modules
     tty: true
   
@@ -36,6 +62,15 @@ services:
       - 27017:27017
     volumes:
       - dbdata6:/data/db
+  
+  images:
+    image: node:alpine
+    container_name: images
+    command: "./setup.sh"
+    working_dir: /srv/app
+    volumes:
+      - ./images:/srv/app/
+      - /srv/app/node_modules
     
 volumes:
   dbdata6:
