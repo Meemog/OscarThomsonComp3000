@@ -1,8 +1,10 @@
 import { sha256 } from "js-sha256"
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 
 import Cookies from "universal-cookie"
 import PassBox from "../elements/Passbox"
+import LoadCircle from "../elements/Loading"
+import { authenticate } from "../scripts/auth"
 
 interface contentInt {
     username: string,
@@ -14,7 +16,32 @@ interface dataInt {
     valid: boolean
 }
 
+
 export default function Login(): ReactNode {
+    const [content, setContent] = useState(<LoadCircle size={8} offset={10}/>)
+    const [isAuth, setAuth] = useState(true)
+
+    useEffect(() => {
+        if (isAuth){
+            const auth = authenticate()
+
+            auth.then((data) => {
+                if(data.loggedIn){
+                    if(data.data!.type === "admin"){
+                        const url = window.location
+                        window.location.replace(`http://${url.hostname}:${url.port}/home`)
+                    }
+                }
+                setContent(<LoginPage />)
+                setAuth(false)
+            })
+        }
+    }, [isAuth])
+
+    return content
+}
+
+function LoginPage(): ReactNode {
     const [errorBox, setErrors] = useState(<br />)
 
     function errorFormat(errors: Array<string>): Array<ReactNode> {
@@ -66,6 +93,7 @@ export default function Login(): ReactNode {
 
     function submit() {
         const data = getData()
+        console.log(data)
         if (data.valid){
             const url = window.location
             fetch(`http://${url.hostname}/api/login`, {
@@ -88,9 +116,11 @@ export default function Login(): ReactNode {
                     } else {
                         response.json()
                             .then((data) => {
+                                console.log(data)
                                 const cookies = new Cookies()
                                 cookies.set("Token", data.token, {expires:new Date(data.expiry)})
-                                window.location.replace(`http://${url.hostname}:${url.port}/`)
+                                console.log(cookies.get("Token"))
+                                window.location.replace(`http://${url.hostname}:${url.port}/home`)
                             })
                     }
                 })

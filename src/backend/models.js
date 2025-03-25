@@ -1,3 +1,4 @@
+const e = require('express')
 const mongoose = require('mongoose')
 
 const accountSchema = mongoose.Schema({
@@ -15,9 +16,12 @@ const profileSchema = mongoose.Schema({
     firstName: String,
     lastName: String,
     otherNames: Array,
+    email: String,
+    phoneNumber: String,
     profilePicture: String,
     payRate: Number,
-    overtimePayRate: Number
+    overtimePayRate: Number,
+    contractedHours: Number
 })
 
 module.exports.profileModel = mongoose.model('Profile', profileSchema)
