@@ -1,8 +1,10 @@
 import { sha256 } from "js-sha256"
-import { ReactNode, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 
 import Cookies from "universal-cookie"
 import PassBox from "../elements/Passbox"
+import { authenticate } from "../scripts/auth"
+import LoadCircle from "../elements/Loading"
 
 interface contentInt {
     username: string,
@@ -15,7 +17,30 @@ interface dataInt {
 }
 
 export default function Login(): ReactNode {
+    const [content, setContent] = useState(<LoadCircle size={8} offset={10}/>)
+    const [isAuth, setAuth] = useState(true)
+
+    useEffect(() => {
+        if (isAuth){
+            const auth = authenticate()
+
+            auth.then((data) => {
+                if(data.loggedIn){
+                    const url = window.location
+                    window.location.replace(`http://${url.hostname}:${url.port}/`)
+                }
+                setContent(<LoginPage />)
+                setAuth(false)
+            })
+        }
+    }, [isAuth])
+
+    return content
+}
+
+function LoginPage(): ReactNode {
     const [errorBox, setErrors] = useState(<br />)
+
 
     function errorFormat(errors: Array<string>): Array<ReactNode> {
         const elements = [<p>Please Fix the Following Errors:</p>]

@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@keyframes slideRight {
+0% {
+    transform: translateX(-100%);
+}
+100% {
+    transform: translateX(0);
+}
+}
+
+.slide-right {
+    animation-name: slideRight;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in;
+}

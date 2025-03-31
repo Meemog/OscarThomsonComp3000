@@ -13,6 +13,7 @@ import Database from './pages/Database'
 import Login from './pages/Login'
 
 import './index.css'
+import Account from './pages/Account'
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login />,
       },
+      {
+        path: "/account/:username",
+        element: <Account />,
+      }
     ]
   }
 ])

@@ -9,7 +9,8 @@ export default function Accounts(): ReactNode {
             <h1 className="text-2xl text-center my-2">Accounts</h1>
             <AccountList />
             <div className="flex justify-center">
-                <Link to="/new-account"><button className="h-7 w-64 bg-blue-500 hover:bg-blue-700 text-white rounded">+ Add New Account</button></Link>
+                <Link to="/home"><button className="h-7 w-64 bg-blue-500 hover:bg-blue-700 text-white rounded mr-2">Back</button></Link>
+                <Link to="/new-account"><button className="h-7 w-64 bg-blue-500 hover:bg-blue-700 text-white rounded ml-2">+ Add New Account</button></Link>
             </div>
         </div>
     )
