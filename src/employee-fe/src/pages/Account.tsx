@@ -318,6 +318,7 @@ type ImageUploadProps = {
 }
 
 function ImageUpload({resetFunc, username}: ImageUploadProps): ReactNode {
+    const [errorBox, setErrors] = useState(<br />)
     function submit() {
         const dataInput = document.getElementById("image")!
 
@@ -344,8 +345,15 @@ function ImageUpload({resetFunc, username}: ImageUploadProps): ReactNode {
             .then((response: Response) => {
                 if (response.ok){
                     resetFunc()
+                } else {
+                    response.json().then(data => {
+                        setErrors(
+                            <div className="bg-red-300 p-2 mt-2 mb-2 rounded">
+                                <p className="text-center">{data.error}</p>
+                            </div>
+                        )
+                    })
                 }
-                // else catch errors
             })
     }
     return(
@@ -358,6 +366,7 @@ function ImageUpload({resetFunc, username}: ImageUploadProps): ReactNode {
                 <button className="h-7 w-32 bg-blue-500 hover:bg-blue-700 text-white rounded mr-2" onClick={resetFunc}>Cancel</button>
                 <button className="h-7 w-32 bg-blue-500 hover:bg-blue-700 text-white rounded" onClick={submit}>Upload</button>
             </div>
+            {errorBox}
         </div>
     )
 }

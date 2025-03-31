@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Outlet, Link } from "react-router-dom"
 import { authenticate, logout } from "../scripts/auth"
+import Cookies from "universal-cookie"
 
 export default function Navbar() {
   const [userButton, setUserButton] = useState<JSX.Element>(<li className="hover:bg-gray-800 float-right"><Link to="/login" className="block text-white text-center text-lg px-3 py-4">Login</Link></li>)
@@ -35,11 +36,33 @@ export default function Navbar() {
 }
 
 type UserButtonProps = {
-  username: string
+  username: string,
 }
 
 function UserButton({username}: UserButtonProps): JSX.Element {
   const [shown, setShown] = useState<boolean>(false)
+  const [profilePicture, setProfilePicture] = useState("/pfp.png")
+  const [isSet, setIsSet] = useState(false)
+
+  useEffect(()=>{
+    if(!isSet){
+      const url = window.location
+      const cookies = new Cookies()
+      const token = cookies.get("Token")
+
+      fetch(`http://${url.hostname}/api/getAccount/${username}`, {
+          method: "GET",
+          headers: {
+              "Authorization": token
+          }
+      })
+        .then(data => data.json())
+        .then(jData => {
+          setProfilePicture(jData.profilePicture)
+          setIsSet(true)
+        })
+    }
+  })
 
   function togglePopup() {
     setShown(!shown)
@@ -49,11 +72,22 @@ function UserButton({username}: UserButtonProps): JSX.Element {
     logout()
   }
 
+  const url = window.location
+
   if (shown) {
     return (
       <>
       <li className="float-right hover:bg-gray-800">
-      <button className="block text-white text-center text-lg px-3 py-4" onClick={togglePopup}>{username}</button>
+        <button onClick={togglePopup}>
+          <div className="grid grid-cols-2">
+          <p className="block text-white text-center text-lg px-3 py-4" >{username}</p>
+          <div className="flex items-center justify-center">
+            <div className="border-solid border-2 rounded-full w-12 h-12">
+                <img className="rounded-full" src={`http://${url.hostname}/images/${profilePicture}`} />
+            </div>
+          </div>
+          </div>
+        </button>
       </li>
       <li className="hover:bg-gray-800 float-right"><button className="block text-white text-center text-lg px-3 py-4" onClick={logOut}>Logout</button></li>
       <li className="hover:bg-gray-800 float-right"><Link to="/timetable" className="block text-white text-center text-lg px-3 py-4">TimeTable</Link></li>
@@ -61,6 +95,19 @@ function UserButton({username}: UserButtonProps): JSX.Element {
       </>
     )
   } else {
-    return <li className="float-right hover:bg-gray-800"><button className="block text-white text-center text-lg px-3 py-4" onClick={togglePopup}>{username}</button></li>
+    return (
+      <li className="float-right hover:bg-gray-800">
+        <button onClick={togglePopup}>
+          <div className="grid grid-cols-2">
+          <p className="block text-white text-center text-lg px-3 py-4" >{username}</p>
+          <div className="flex items-center justify-center">
+            <div className="border-solid border-2 rounded-full w-12 h-12">
+                <img className="rounded-full" src={`http://${url.hostname}/images/${profilePicture}`} />
+            </div>
+          </div>
+          </div>
+        </button>
+      </li>
+    )
   }
 }

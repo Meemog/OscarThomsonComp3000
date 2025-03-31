@@ -13,7 +13,6 @@ module.exports.setPfp = async function(req, res){
 
     const name = `${Date.now() - 1743350980000}${Math.floor(Math.random() * 10000)}.png`
 
-
     const view = new Uint8Array(req.files.picture.data.buffer)
 
     const widthBytes = view.slice(16, 20)
@@ -22,8 +21,6 @@ module.exports.setPfp = async function(req, res){
     const width = widthBytes[3] + widthBytes[2] * 256 + widthBytes[1] * 65536 + widthBytes[0] * 16777216
     const height = heightBytes[3] + heightBytes[2] * 256 + heightBytes[1] * 65536 + heightBytes[0] * 16777216
 
-    console.log(width)
-    console.log(height)
 
     if (width != 256 || height != 256){
         res.status(400)
@@ -55,9 +52,6 @@ module.exports.setPfp = async function(req, res){
         const account = await accountModel.findOne({username: user.username})
         const profile = await profileModel.findOne({accountId: account._id})
 
-        console.log(account)
-        console.log(profile)
-
         if (profile.profilePicture != "/pfp.png"){
             await fetch(`http://images:3002${profile.profilePicture}`,{
                 method: "DELETE"
@@ -73,7 +67,7 @@ module.exports.setPfp = async function(req, res){
         return
     } else {
         res.status(500)
-        res.send()
+        res.json({error:"Server error"})
         return
     }
 

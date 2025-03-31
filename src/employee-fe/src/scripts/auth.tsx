@@ -7,7 +7,7 @@ interface auth {
 
 interface userData {
     username: string,
-    type: string
+    type: string,
 }
 
 // Gets cookie and returns user data if logged in
@@ -45,7 +45,7 @@ export async function authenticate(): Promise<auth>{
         loggedIn: true,
         data:{
             username: data.username,
-            type: data.accountType
+            type: data.accountType,
         }
     })
 }
