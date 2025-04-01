@@ -91,6 +91,35 @@ function LoginPage(): ReactNode {
         return toReturn
     }
 
+    async function verifyAdmin(): Promise<boolean> {
+        const cookies = new Cookies()
+        const token = cookies.get("Token")
+        if (token){
+            const url = window.location
+            const response = await fetch(`http://${url.hostname}/api/auth`, {
+                method: "GET",
+                headers:{
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                }
+            })
+
+            if (!response.ok){
+                return false
+            }
+
+            const data = await response.json()
+
+            if (data.accountType === "admin"){
+                return true
+            }
+            return false
+        }
+        else {
+            return false
+        }
+    }
+
     function submit() {
         const data = getData()
         console.log(data)
@@ -116,11 +145,23 @@ function LoginPage(): ReactNode {
                     } else {
                         response.json()
                             .then((data) => {
-                                console.log(data)
                                 const cookies = new Cookies()
                                 cookies.set("Token", data.token, {expires:new Date(data.expiry)})
                                 console.log(cookies.get("Token"))
-                                window.location.replace(`http://${url.hostname}:${url.port}/home`)
+                                verifyAdmin()
+                                    .then((isAdmin) => {
+                                        if (isAdmin){
+                                            window.location.replace(`http://${url.hostname}:${url.port}/home`)
+                                        }
+                                        else {
+                                            setErrors(
+                                                <div className="p-6 mt-2 rounded bg-red-300 shadow-lg">
+                                                    <p>Invalid Credentials</p>
+                                                </div>
+                                            )
+                                            cookies.remove("Token")
+                                        }
+                                    })
                             })
                     }
                 })
