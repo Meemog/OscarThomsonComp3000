@@ -43,7 +43,7 @@ function HomePage({username}: HomePageProps): ReactNode {
                     <Link to="/accounts"><button className="h-44 w-full bg-blue-500 hover:bg-blue-700 text-white rounded">Manage Staff Accounts</button></Link>
                 </div>
                 <div>
-                    <button className="h-44 w-full bg-blue-500 hover:bg-blue-700 text-white rounded">Schedule shifts</button>
+                    <Link to="/scheduling"><button className="h-44 w-full bg-blue-500 hover:bg-blue-700 text-white rounded">Schedule shifts</button></Link>
                 </div>
                 <div>
                     <button className="h-44 w-full bg-blue-500 hover:bg-blue-700 text-white rounded">Other options</button>

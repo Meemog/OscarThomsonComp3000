@@ -176,7 +176,6 @@ module.exports.auth = async function(req, res){
 }
 
 module.exports.getAccounts = async function(req, res){
-    console.log("Getting accounts")
     const token = req.header("Authorization")
     const accountType = await authenticate(token)
 

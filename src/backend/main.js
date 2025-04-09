@@ -4,8 +4,10 @@ const mongoose = require('mongoose')
 const fileupload = require('express-fileupload')
 
 const { login, logout, createAccount, auth, getAccounts, deleteAccount, getAccount, updateAccount} = require('./methods/account')
-const { IntervalMethods } = require('./scripts/interval')
 const { setPfp } = require('./methods/pfp')
+const { getSchedule, createShift, getScheduleByDay, getScheduleByMonth, deleteShift } = require('./methods/schedule')
+
+const { IntervalMethods } = require('./scripts/interval')
 
 const app = express()
 const port = 3000
@@ -30,6 +32,12 @@ app.delete('/deleteAccount/:username', deleteAccount)
 app.get('/auth', auth)
 
 app.post('/setPfp/:username', setPfp)
+
+app.get('/schedule/:username', getSchedule)
+app.get('/schedule/:username/:year/:month', getScheduleByMonth)
+app.get('/schedule/:username/:year/:month/:day', getScheduleByDay)
+app.post('/schedule/:username', createShift)
+app.delete('/schedule/:id', deleteShift)
 
 
 app.listen(port, () => {
