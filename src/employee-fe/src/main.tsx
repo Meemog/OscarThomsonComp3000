@@ -14,6 +14,8 @@ import Login from './pages/Login'
 
 import './index.css'
 import Account from './pages/Account'
+import Timetable from './pages/Timetable'
+import ShiftView from './pages/ShiftView'
 
 const router = createBrowserRouter([
   {
@@ -39,6 +41,14 @@ const router = createBrowserRouter([
       {
         path: "/account/:username",
         element: <Account />,
+      },
+      {
+        path: "/timetable/:username",
+        element: <Timetable />,
+      },
+      {
+        path: "/timetable/:username/:date",
+        element: <ShiftView />,
       }
     ]
   }

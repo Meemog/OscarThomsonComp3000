@@ -73,18 +73,10 @@ module.exports.getScheduleByMonth = async function (req, res) {
         return
     }
 
-    // this isn't nececcary as javascript will let you put 13 into a date constructor, but it't kept for clarity
-    let endYear = year
-    let endMonth = month + 1
-    if (endMonth == 12) {
-        endMonth = 0
-        year += 1
-    }
-
     // generate start and end timestamps for the month
 
     const startTime = new Date(year, month, 1).getTime()
-    const endTime = new Date(endYear, endMonth, 1).getTime()-1
+    const endTime = new Date(year, month+1, 1).getTime()-1
 
     const shifts = await scheduledShiftModel.find({
         accountId: userId._id,

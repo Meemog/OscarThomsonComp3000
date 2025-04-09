@@ -1,9 +1,10 @@
 import { ReactNode, useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
 import LoadCircle from "../elements/Loading";
 import Cookies from "universal-cookie";
+import { Link } from "react-router-dom";
 
-export default function ScheduleUser(): ReactNode {
+export default function Timetable(): ReactNode {
     const [content, setContent] = useState(<LoadCircle size={8} offset={10}/>)
     const [hasData, setHasData] = useState(false)
 
@@ -47,9 +48,6 @@ export default function ScheduleUser(): ReactNode {
         <div className="mx-auto w-full max-w-2xl">
             <h1 className="text-2xl text-center mt-2 mb-6">Schedule For User: {params.username}</h1>
             {content}
-            <div className="flex justify-center">
-                <Link to="/scheduling"><button className="h-7 w-64 bg-blue-500 hover:bg-blue-700 text-white rounded mr-2">Back</button></Link>
-            </div>
         </div>
     )
 }
@@ -187,9 +185,9 @@ function Calendar({month, year, username, scheduledDays}: calendarProps): ReactN
             }
             for (let k=currentDay; k<numDays; k++){
                 if (scheduledDays.includes(k+1)){
-                    days.push(<Link to={`/scheduling/${username}/${year}${standardiseInt(month+1)}${standardiseInt(k+1)}`} className="my-4 mx-2 border rounded-full bg-green-400 hover:bg-green-300 hover:shadow-sm"><p className="text-center">{k+1}</p></Link>)
+                    days.push(<Link to={`/timetable/${username}/${year}${standardiseInt(month+1)}${standardiseInt(k+1)}`} className="my-4 mx-2 border rounded-full bg-green-400 hover:bg-green-300 hover:shadow-sm"><p className="text-center">{k+1}</p></Link>)
                 } else {
-                    days.push(<Link to={`/scheduling/${username}/${year}${standardiseInt(month+1)}${standardiseInt(k+1)}`} className="my-4 mx-2 border rounded-full hover:bg-gray-200 hover:shadow-sm"><p className="text-center">{k+1}</p></Link>)
+                    days.push(<Link to={`/timetable/${username}/${year}${standardiseInt(month+1)}${standardiseInt(k+1)}`} className="my-4 mx-2 border rounded-full hover:bg-gray-200 hover:shadow-sm"><p className="text-center">{k+1}</p></Link>)
                 }
             }
 

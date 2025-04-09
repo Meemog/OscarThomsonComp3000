@@ -90,7 +90,7 @@ function UserButton({username}: UserButtonProps): JSX.Element {
         </button>
       </li>
       <li className="hover:bg-gray-800 float-right"><button className="block text-white text-center text-lg px-3 py-4" onClick={logOut}>Logout</button></li>
-      <li className="hover:bg-gray-800 float-right"><Link to="/timetable" className="block text-white text-center text-lg px-3 py-4">TimeTable</Link></li>
+      <li className="hover:bg-gray-800 float-right"><Link to={`/timetable/${username}`} className="block text-white text-center text-lg px-3 py-4">TimeTable</Link></li>
       <li className="hover:bg-gray-800 float-right"><Link to={`/account/${username}`} className="block text-white text-center text-lg px-3 py-4">Account</Link></li>
       </>
     )
