@@ -114,7 +114,8 @@ function LoginPage(): ReactNode {
                         response.json()
                             .then((data) => {
                                 const cookies = new Cookies()
-                                cookies.set("Token", data.token, {expires:new Date(data.expiry)})
+                                cookies.remove("Token")
+                                cookies.set("Token", data.token, {expires:new Date(data.expiry), path:"/"})
                                 window.location.replace(`http://${url.hostname}:${url.port}/`)
                             })
                     }
