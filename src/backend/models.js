@@ -6,7 +6,9 @@ const accountSchema = mongoose.Schema({
     password: String,
     token: String,
     accountType: String,
-    expiry: Number
+    expiry: Number,
+    tempToken: String,
+    tempExpiry: Number
 })
 
 module.exports.accountModel = mongoose.model('Account', accountSchema)

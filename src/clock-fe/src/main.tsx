@@ -8,10 +8,17 @@ import {
 
 import './index.css'
 
+import Login from './pages/Login'
+import Clock from './pages/Clock'
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <h1 className='text-xl'>Clock</h1>,
+    element: <Login />,
+  },
+  {
+    path: "/clock",
+    element: <Clock />,
   }
 ])
 

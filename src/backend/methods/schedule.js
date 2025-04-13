@@ -37,7 +37,6 @@ module.exports.getScheduleByDay = async function (req, res) {
     const startTime = new Date(year, month-1, day).getTime()
     const endTime = new Date(year, month-1, day + 1).getTime() - 1
 
-    console.log(startTime, endTime)
     const shifts = await scheduledShiftModel.find({
         accountId: userId._id,
         startTime: { $gte: startTime, $lte: endTime },
@@ -113,6 +112,20 @@ module.exports.createShift = async function (req, res) {
     if (startTime >= endTime) {
         res.status(400)
         res.json({ error: "Start time must be before end time" })
+        return
+    }
+
+    const overlappingShifts = await scheduledShiftModel.find({
+        accountId: user._id,
+        $or: [
+            { startTime: { $gt: startTime, $lt: endTime } },
+            { endTime: { $gt: startTime, $lt: endTime } },
+        ],
+    })
+
+    if (overlappingShifts.length > 0) {
+        res.status(400)
+        res.json({ error: "Shift overlaps with existing shift" })
         return
     }
 

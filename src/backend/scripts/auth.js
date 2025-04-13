@@ -1,6 +1,9 @@
 const { accountModel } = require('../models')
 
 async function getUser(token) {
+    if (token == null) {
+        return null
+    }
     const userWithToken = await accountModel.findOne({token:token})
     return userWithToken
 }
