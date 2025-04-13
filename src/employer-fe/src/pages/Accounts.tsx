@@ -46,7 +46,9 @@ function AccountList(): ReactNode {
     function formatUsers(data) {
         const users = []
         for (let i = 0; i < data.length; i++){
-            users.push(<Account pfp={data[i].profilePicture} username={data[i].username} type={data[i].accountType} name={data[i].firstName + " " + data[i].lastName} pay={data[i].payRate} otPay={data[i].overtimePayRate}/>)
+            if (data[i].accountType === "staff"){
+                users.push(<Account pfp={data[i].profilePicture} username={data[i].username} type={data[i].accountType} name={data[i].firstName + " " + data[i].lastName} pay={data[i].payRate} otPay={data[i].overtimePayRate}/>)
+            }
         }
         return users
     }

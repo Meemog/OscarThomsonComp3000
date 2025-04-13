@@ -135,7 +135,7 @@ export default function NewShift(): ReactNode{
         if (startTime && endTime) {
             const totMins = calculateTime(startTime, endTime)
 
-            const display = `${(totMins/60)}h ${totMins%60}m`
+            const display = `${Math.floor(totMins/60)}h ${totMins%60}m`
 
             // const display = `${(totMins/60).toString().length == 2 ? totMins/60 : `0${totMins/60}`}:${(totMins%60).toString().length == 2 ? totMins%60 : `0${totMins%60}`}`
 

@@ -210,5 +210,4 @@ function LoginPage(): ReactNode {
         </div>
         </>
     )
-
 }

@@ -133,7 +133,7 @@ function Shift({startTime, endTime, breakDuration, id}: shiftType) {
                 <p className="text-lg text-center">{new Date(startTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
                 <p className="text-lg text-center">{new Date(endTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
                 <p className="text-lg text-center">{breakDuration/60} min</p>
-                <p className="text-lg text-center">{(endTime-startTime)/(60*60*1000)}h {((endTime-startTime)/(60*1000))%60}m</p>
+                <p className="text-lg text-center">{Math.floor((endTime-startTime)/(60*60*1000))}h {((endTime-startTime)/(60*1000))%60}m</p>
             </Link>
             <button className="h-7 w-7 bg-red-500 hover:bg-red-700 text-white rounded" onClick={() => {deleteShift(id)}}>X</button>
         </div>
