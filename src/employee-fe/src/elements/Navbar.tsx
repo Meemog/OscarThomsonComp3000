@@ -13,8 +13,13 @@ export default function Navbar() {
       
       auth.then((data) => {
         if (data.loggedIn) {
-          setUserButton(<UserButton username={data.data!.username} />)
           setAuth(true)
+          if (data.data!.type === "admin") {
+            const cookies = new Cookies()
+            cookies.remove("Token")
+          } else {
+            setUserButton(<UserButton username={data.data!.username} />)
+          }
         }
       })
     }

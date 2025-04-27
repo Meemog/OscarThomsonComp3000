@@ -1,4 +1,4 @@
 public/*
 
-# exception to ensure folder stays
-!public/.gitkeep
+# exception to ensure default pfp exists
+!public/pfp.png

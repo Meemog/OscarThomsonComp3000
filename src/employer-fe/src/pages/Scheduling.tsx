@@ -84,7 +84,7 @@ function UserList({data}: UserListProps): ReactNode {
     function formatUsers(data: Array<dataInt>) {
         const users = []
         for (let i = 0; i < data.length; i++){
-            if (data[i].accountType != "admin"){
+            if (data[i].accountType === "staff"){
                 console.log(data[i])
                 users.push(
                     <User pfp={data[i].pfp} username={data[i].username} accountType={data[i].accountType} name={data[i].name} contractedHours={data[i].contractedHours}/>

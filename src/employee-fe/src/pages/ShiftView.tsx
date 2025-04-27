@@ -109,8 +109,8 @@ function Shift({startTime, endTime, breakDuration}: shiftType) {
         <div className="grid grid-cols-4 gap-4 mt-4 mb-4">
                 <p className="text-lg text-center">{new Date(startTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
                 <p className="text-lg text-center">{new Date(endTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</p>
-                <p className="text-lg text-center">{breakDuration/60} min</p>
-                <p className="text-lg text-center">{(endTime-startTime)/(60*60*1000)}h {((endTime-startTime)/(60*1000))%60}m</p>
+                <p className="text-lg text-center">{Math.floor(breakDuration/60)} min</p>
+                <p className="text-lg text-center">{Math.floor((endTime-startTime)/(60*60*1000))}h {((endTime-startTime)/(60*1000))%60}m</p>
         </div>
         )
 }

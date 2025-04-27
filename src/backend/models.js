@@ -38,6 +38,7 @@ const ScheduledShiftSchema = mongoose.Schema({
 module.exports.scheduledShiftModel = mongoose.model('ScheduledShift', ScheduledShiftSchema)
 
 const ActualShiftSchema = mongoose.Schema({
+    shiftId: String,
     accountId: String,
     startTime: Number,
     endTime: Number,

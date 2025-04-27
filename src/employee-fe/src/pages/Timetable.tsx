@@ -180,10 +180,10 @@ function Calendar({month, year, username, scheduledDays}: calendarProps): ReactN
         }
         if (isCurrentMonth && isCurrentYear){
             const currentDay = new Date().getDate()
-            for (let j=0; j<currentDay; j++){
+            for (let j=0; j<currentDay-1; j++){
                 days.push(<div className="my-4 mx-2 border rounded-full bg-gray-300"><p className="text-center">{j+1}</p></div>)
             }
-            for (let k=currentDay; k<numDays; k++){
+            for (let k=currentDay-1; k<numDays; k++){
                 if (scheduledDays.includes(k+1)){
                     days.push(<Link to={`/timetable/${username}/${year}${standardiseInt(month+1)}${standardiseInt(k+1)}`} className="my-4 mx-2 border rounded-full bg-green-400 hover:bg-green-300 hover:shadow-sm"><p className="text-center">{k+1}</p></Link>)
                 } else {

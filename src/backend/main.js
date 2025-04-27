@@ -8,7 +8,7 @@ const { setPfp } = require('./methods/pfp')
 const { getSchedule, createShift, getScheduleByDay, getScheduleByMonth, deleteShift } = require('./methods/schedule')
 
 const { IntervalMethods } = require('./scripts/interval')
-const { tempLogin, getShiftState, getRelevantShift } = require('./methods/clock')
+const { tempLogin, getShiftState, getRelevantShift, clockIn, clockOut, startBreak, endBreak } = require('./methods/clock')
 
 const app = express()
 const port = 3000
@@ -43,6 +43,10 @@ app.delete('/schedule/:id', deleteShift)
 app.post('/clock/login', tempLogin)
 app.get('/clock/state', getShiftState)
 app.get('/clock/shift', getRelevantShift)
+app.post('/clock/clockIn', clockIn)
+app.post('/clock/clockOut', clockOut)
+app.post('/clock/startBreak', startBreak)
+app.post('/clock/endBreak', endBreak)
 
 
 app.listen(port, () => {

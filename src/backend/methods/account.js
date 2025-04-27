@@ -89,7 +89,7 @@ module.exports.logout = async function(req, res) {
         return
     }
 
-    await accountModel.findOneAndUpdate({token: data.token}, {"$unset": {expiry: "", token: ""}})
+    await accountModel.findOneAndUpdate({token: token}, {"$unset": {expiry: "", token: ""}})
 
     res.status(200)
     res.json({message:"Logged out"})
@@ -195,7 +195,7 @@ module.exports.getAccounts = async function(req, res){
                 username: account.username,
                 accountType: account.accountType,
             }
-            if (account.accountType != "admin"){
+            if (account.accountType === "staff"){
                 obj.firstName = profile.firstName
                 obj.lastName = profile.lastName
                 obj.otherNames = profile.otherNames
@@ -212,6 +212,7 @@ module.exports.getAccounts = async function(req, res){
         res.json(users)
         return
     } catch (err) {
+        console.log(err)
         res.status(500)
         res.json({error:"Server error"})
         return
@@ -234,6 +235,17 @@ module.exports.getAccount = async function(req, res){
     if (!account){
         res.status(404)
         res.json({error:"User not found"})
+        return
+    }
+
+    if (account.accountType === "admin"){
+        const toReturn = {
+            username: account.username,
+            accountType: account.accountType,
+        }
+
+        res.status(200)
+        res.json(toReturn)
         return
     }
     
